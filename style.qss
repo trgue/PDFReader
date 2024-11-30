@@ -1,0 +1,25 @@
+
+QWidget#widget {
+background: "#ffffff"
+}
+
+QPushButton#btn_up {
+border-image:url(:/icon/up.png);
+outline:none;
+}
+
+QPushButton#btn_up:pressed {
+border-image:url(:/icon/up_clicked.png);
+outline:none;
+}
+
+QPushButton#btn_down {
+border-image:url(:/icon/down.png);
+outline:none;
+}
+
+QPushButton#btn_down:pressed {
+border-image:url(:/icon/down_clicked.png);
+outline:none;
+}
+

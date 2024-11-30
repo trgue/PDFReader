@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>up.png</file>
+        <file>down_clicked.png</file>
+        <file>down.png</file>
+        <file>up_clicked.png</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>style.qss</file>
+    </qresource>
+</RCC>
