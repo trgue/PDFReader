@@ -8,14 +8,20 @@ MainWindow::MainWindow(QWidget *parent)
 
     char *input = const_cast< char* >("1.pdf");
     hBoxLayout = new QHBoxLayout();
+    vBoxLayout = new QVBoxLayout();
+
     widget = new QWidget();
     widget->setGeometry(0, 0, 1024, 600);
     widget->setObjectName("widget");
+
+    listWidget = new QListWidget();
 
     textWidget = new QWidget();
     textWidget->setMinimumSize(100, 200);
     textWidget->setMaximumSize(100, 200);
     textWidget->installEventFilter(this);
+
+    buttonWidget = new QWidget();
 
     //100%缩放比
     zoom = 100;
@@ -72,8 +78,7 @@ MainWindow::MainWindow(QWidget *parent)
     fz_drop_document(ctx, doc);
     fz_drop_context(ctx);
 
-    widget->setLayout(hBoxLayout);
-    setCentralWidget(widget);
+    widgetSet();
 
     listWidget->setCurrentRow(0);
 
@@ -84,45 +89,54 @@ MainWindow::~MainWindow()
 {
 }
 
+void MainWindow::widgetSet()
+{
+    vBoxLayout->addWidget(pushButton[0]);
+    vBoxLayout->addWidget(textWidget);
+    vBoxLayout->addWidget(pushButton[1]);
+    buttonWidget->setLayout(vBoxLayout);
+    hBoxLayout->addWidget(buttonWidget);
+    hBoxLayout->addWidget(listWidget);
+    widget->setLayout(hBoxLayout);
+    setCentralWidget(widget);
+}
+
 void MainWindow::paintEvent(QPaintEvent* event)
 {
     Q_UNUSED(event);
-    showPaint();
-
+    showPaint(listWidget->currentRow());
 }
 
 bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 {
-    if(watched == textWidget && event->type() == QEvent::Paint)
-    {
-        showPaint(); //响应函数
+    if(watched == textWidget && event->type() == QEvent::Paint) {
+        showPaint(listWidget->currentRow()); //响应函数
     }
     return QWidget::eventFilter(watched,event);
 }
 
 
-void MainWindow::showPaint()
+void MainWindow::showPaint(int currentRow)
 {
-    painter = new QPainter(textWidget);
     QFont ft;
     ft.setPointSize(20);
 
+    painter = new QPainter(textWidget);
     QPen pen(Qt::black);
     painter->setPen(pen);
     painter->setFont(ft);
 
-    painter->translate(50, 50);
+    painter->translate(40, 55);
     painter->rotate(90);
-    painter->drawText(0, 0, QString("1 / ") + QString::number(page_count));
+    painter->drawText(0, 0, QString::number(currentRow + 1) + QString(" / ") + QString::number(page_count));
     painter->end();
-    vBoxLayout->addWidget(textWidget);
 
 }
 
 void MainWindow::listWidgetRow_Changed(int currentRow)
 {
     if (currentRow >= 0) {
-//        pageLabel->setText(QString::number(currentRow + 1) + QString(" / ") + QString::number(page_count));
+        this->update();
     }
 }
 
@@ -130,7 +144,6 @@ void MainWindow::pushButton0_Clicked()
 {
     if (listWidget->currentRow() - 1 >= 0) {
         listWidget->setCurrentRow(listWidget->currentRow() - 1);
-//        pageLabel->setText(QString::number(listWidget->currentRow() + 1) + QString(" / ") + QString::number(page_count));
     }
 }
 
@@ -138,34 +151,26 @@ void MainWindow::pushButton1_Clicked()
 {
     if (listWidget->currentRow() + 1 <= page_count - 1) {
         listWidget->setCurrentRow(listWidget->currentRow() + 1);
-//        pageLabel->setText(QString::number(listWidget->currentRow() + 1) + QString(" / ") + QString::number(page_count));
     }
 }
 
 void MainWindow::buttonSet()
 {
-    vBoxLayout = new QVBoxLayout();
-    buttonWidget = new QWidget();
     for (int i = 0; i < 2; i++) {
         pushButton[i] = new QPushButton();
         pushButton[i]->setMinimumSize(100, 100);
         if (i == 0) {
-//            pushButton[i]->setText(QString("上一页"));
             pushButton[i]->setObjectName("btn_up");
         }
         else {
-//            pushButton[i]->setText(QString("下一页"));
             pushButton[i]->setObjectName("btn_down");
         }
-        vBoxLayout->addWidget(pushButton[i]);
     }
-    buttonWidget->setLayout(vBoxLayout);
-    hBoxLayout->addWidget(buttonWidget);
+
 }
 
 void MainWindow::multiPageShow()
 {
-    listWidget = new QListWidget();
     listWidget->setIconSize(QSize(900, 600));
     listWidget->setSpacing(10);
     listWidget->setResizeMode(QListView::Adjust);
@@ -195,8 +200,6 @@ void MainWindow::multiPageShow()
 
         fz_drop_pixmap(ctx, pix);
     }
-
-    hBoxLayout->addWidget(listWidget);
 
 }
 

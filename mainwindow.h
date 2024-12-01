@@ -56,7 +56,8 @@ private:
 private:
     void multiPageShow();
     void buttonSet();
-    void showPaint();
+    void showPaint(int currentRow);
+    void widgetSet();
     void paintEvent(QPaintEvent* event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
 
