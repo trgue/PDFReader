@@ -52,12 +52,20 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = main.cpp \
+SOURCES       = Reader/reader.cpp \
+		SlidePage/slidepage.cpp \
+		main.cpp \
 		mainwindow.cpp qrc_res.cpp \
+		moc_reader.cpp \
+		moc_slidepage.cpp \
 		moc_mainwindow.cpp
-OBJECTS       = main.o \
+OBJECTS       = reader.o \
+		slidepage.o \
+		main.o \
 		mainwindow.o \
 		qrc_res.o \
+		moc_reader.o \
+		moc_slidepage.o \
 		moc_mainwindow.o
 DIST          = ../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/mkspecs/features/spec_pre.prf \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/mkspecs/common/unix.conf \
@@ -151,7 +159,11 @@ DIST          = ../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/mkspecs/feat
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/mkspecs/features/exceptions.prf \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/mkspecs/features/yacc.prf \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/mkspecs/features/lex.prf \
-		pdfreader.pro mainwindow.h main.cpp \
+		pdfreader.pro Reader/reader.h \
+		SlidePage/slidepage.h \
+		mainwindow.h Reader/reader.cpp \
+		SlidePage/slidepage.cpp \
+		main.cpp \
 		mainwindow.cpp
 QMAKE_TARGET  = pdfreader
 DESTDIR       = 
@@ -369,8 +381,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents res.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents Reader/reader.h SlidePage/slidepage.h mainwindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents Reader/reader.cpp SlidePage/slidepage.cpp main.cpp mainwindow.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -412,9 +424,384 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/mkspecs/features/data/dummy.cpp
 	arm-linux-gnueabihf-g++ -O2 -march=armv7-a -mtune=cortex-a7 -mfpu=neon -mfloat-abi=hard -O2 -march=armv7-a -mtune=cortex-a7 -mfpu=neon -mfloat-abi=hard -pipe -O2 -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h ../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_reader.cpp moc_slidepage.cpp moc_mainwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
+	-$(DEL_FILE) moc_reader.cpp moc_slidepage.cpp moc_mainwindow.cpp
+moc_reader.cpp: Reader/reader.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QMainWindow \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qmainwindow.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qtwidgetsglobal.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qtguiglobal.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qglobal.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qconfig-bootstrapped.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qconfig.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qtcore-config.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qsystemdetection.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qprocessordetection.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qcompilerdetection.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qtypeinfo.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qsysinfo.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qlogging.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qflags.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qatomic.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qbasicatomic.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qatomic_bootstrap.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qgenericatomic.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qatomic_cxx11.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qatomic_msvc.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qglobalstatic.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qmutex.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qnumeric.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qversiontagging.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qtgui-config.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qtwidgets-config.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qwidget.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qwindowdefs.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qobjectdefs.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qnamespace.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qobjectdefs_impl.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qwindowdefs_win.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qobject.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstring.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qchar.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qbytearray.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qrefcount.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qarraydata.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringliteral.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringalgorithms.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringview.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringbuilder.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qlist.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qalgorithms.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qiterator.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qhashfunctions.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qpair.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qbytearraylist.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringlist.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qregexp.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringmatcher.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qcoreevent.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qscopedpointer.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qmetatype.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qvarlengtharray.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qcontainerfwd.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qobject_impl.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qmargins.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpaintdevice.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qrect.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qsize.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qpoint.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpalette.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qcolor.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qrgb.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qrgba64.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qbrush.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qvector.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qmatrix.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpolygon.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qregion.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qdatastream.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qiodevice.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qline.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qtransform.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpainterpath.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qimage.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpixelformat.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpixmap.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qsharedpointer.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qshareddata.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qhash.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qsharedpointer_impl.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qfont.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qfontmetrics.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qfontinfo.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qsizepolicy.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qcursor.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qkeysequence.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qevent.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qvariant.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qmap.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qdebug.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qtextstream.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qlocale.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qset.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qcontiguouscache.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qurl.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qurlquery.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qfile.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qfiledevice.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qvector2d.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qtouchdevice.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qtabwidget.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qicon.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QListWidget \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qlistwidget.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qlistview.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qabstractitemview.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qabstractscrollarea.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qframe.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qabstractitemmodel.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qitemselectionmodel.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qabstractitemdelegate.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qstyleoption.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qabstractspinbox.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qvalidator.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qregularexpression.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qslider.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qabstractslider.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qstyle.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qtabbar.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qrubberband.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QListWidgetItem \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QScroller \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qscroller.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QObject \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QPointF \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QScrollerProperties \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qscrollerproperties.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QScopedPointer \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QMetaType \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QVariant \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QPushButton \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qpushbutton.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qabstractbutton.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/QImage \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/QIcon \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QSize \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/QPixmap \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QLabel \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qlabel.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/QPainter \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpainter.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qtextoption.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpen.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/QPaintEvent \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QGraphicsView \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicsview.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qscrollarea.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicsscene.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QVBoxLayout \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qboxlayout.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qlayout.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qlayoutitem.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgridlayout.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QHBoxLayout \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/version.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/config.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/system.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/memento.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/track-usage.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/context.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/geometry.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/crypt.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/getopt.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/hash.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/output.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/buffer.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/string-util.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/pool.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/tree.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/bidi.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/xml.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/stream.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/compress.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/compressed-buffer.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/filter.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/store.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/archive.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/colorspace.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/pixmap.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/separation.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/glyph.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/bitmap.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/image.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/shade.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/font.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/path.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/text.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/color-management.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/device.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/display-list.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/structured-text.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/transition.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/glyph-cache.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/link.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/outline.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/document.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/annotation.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/util.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/writer.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/band-writer.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/output-pnm.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/output-png.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/output-pwg.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/output-pcl.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/output-pclm.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/output-ps.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/output-psd.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/output-svg.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/output-tga.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/name-table.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/object.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/document.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/parse.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/xref.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/crypt.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/page.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/interpret.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/font.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/cmap.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/resource.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/annot.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/field.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/widget.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/appearance.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/event.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/javascript.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/output-pdf.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/clean.h \
+		moc_predefs.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/bin/moc
+	/home/trgue/qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/bin/moc $(DEFINES) --include /home/trgue/qt/pdfreader/moc_predefs.h -I/home/trgue/qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/mkspecs/linux-arm-gnueabi-g++ -I/home/trgue/qt/pdfreader -I/home/trgue/mylib/mupdf-1.12.0-source/include -I/home/trgue/qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include -I/home/trgue/qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets -I/home/trgue/qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui -I/home/trgue/qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/4.9.4 -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/4.9.4/arm-linux-gnueabihf -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/4.9.4/backward -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/lib/gcc/arm-linux-gnueabihf/4.9.4/include -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/lib/gcc/arm-linux-gnueabihf/4.9.4/include-fixed -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/libc/usr/include Reader/reader.h -o moc_reader.cpp
+
+moc_slidepage.cpp: SlidePage/slidepage.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QWidget \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qwidget.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qtwidgetsglobal.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qtguiglobal.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qglobal.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qconfig-bootstrapped.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qconfig.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qtcore-config.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qsystemdetection.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qprocessordetection.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qcompilerdetection.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qtypeinfo.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qsysinfo.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qlogging.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qflags.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qatomic.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qbasicatomic.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qatomic_bootstrap.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qgenericatomic.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qatomic_cxx11.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qatomic_msvc.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qglobalstatic.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qmutex.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qnumeric.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qversiontagging.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qtgui-config.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qtwidgets-config.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qwindowdefs.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qobjectdefs.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qnamespace.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qobjectdefs_impl.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qwindowdefs_win.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qobject.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstring.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qchar.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qbytearray.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qrefcount.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qarraydata.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringliteral.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringalgorithms.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringview.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringbuilder.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qlist.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qalgorithms.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qiterator.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qhashfunctions.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qpair.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qbytearraylist.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringlist.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qregexp.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringmatcher.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qcoreevent.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qscopedpointer.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qmetatype.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qvarlengtharray.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qcontainerfwd.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qobject_impl.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qmargins.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpaintdevice.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qrect.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qsize.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qpoint.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpalette.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qcolor.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qrgb.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qrgba64.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qbrush.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qvector.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qmatrix.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpolygon.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qregion.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qdatastream.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qiodevice.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qline.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qtransform.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpainterpath.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qimage.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpixelformat.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpixmap.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qsharedpointer.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qshareddata.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qhash.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qsharedpointer_impl.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qfont.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qfontmetrics.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qfontinfo.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qsizepolicy.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qcursor.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qkeysequence.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qevent.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qvariant.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qmap.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qdebug.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qtextstream.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qlocale.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qset.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qcontiguouscache.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qurl.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qurlquery.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qfile.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qfiledevice.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qvector2d.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qtouchdevice.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QHBoxLayout \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qboxlayout.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qlayout.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qlayoutitem.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgridlayout.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/QMouseEvent \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QScroller \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qscroller.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QObject \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QPointF \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QScrollerProperties \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qscrollerproperties.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QScopedPointer \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QMetaType \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QVariant \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QScrollBar \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qscrollbar.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qabstractslider.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QScrollArea \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qscrollarea.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qabstractscrollarea.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qframe.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QTimer \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qtimer.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qbasictimer.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QVBoxLayout \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QLabel \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qlabel.h \
+		moc_predefs.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/bin/moc
+	/home/trgue/qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/bin/moc $(DEFINES) --include /home/trgue/qt/pdfreader/moc_predefs.h -I/home/trgue/qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/mkspecs/linux-arm-gnueabi-g++ -I/home/trgue/qt/pdfreader -I/home/trgue/mylib/mupdf-1.12.0-source/include -I/home/trgue/qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include -I/home/trgue/qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets -I/home/trgue/qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui -I/home/trgue/qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/4.9.4 -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/4.9.4/arm-linux-gnueabihf -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/4.9.4/backward -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/lib/gcc/arm-linux-gnueabihf/4.9.4/include -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/lib/gcc/arm-linux-gnueabihf/4.9.4/include-fixed -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/libc/usr/include SlidePage/slidepage.h -o moc_slidepage.cpp
+
 moc_mainwindow.cpp: mainwindow.h \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QMainWindow \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qmainwindow.h \
@@ -559,19 +946,15 @@ moc_mainwindow.cpp: mainwindow.h \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/QPixmap \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QLabel \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qlabel.h \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QGraphicsScene \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicsscene.h \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpen.h \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QGraphicsProxyWidget \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicsproxywidget.h \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicswidget.h \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicslayoutitem.h \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicsitem.h \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QGraphicsView \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicsview.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/QPainter \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpainter.h \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qtextoption.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpen.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/QPaintEvent \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QGraphicsView \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicsview.h \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qscrollarea.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicsscene.h \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QVBoxLayout \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qboxlayout.h \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qlayout.h \
@@ -673,6 +1056,384 @@ compiler_lex_clean:
 compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean 
 
 ####### Compile
+
+reader.o: Reader/reader.cpp Reader/reader.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QMainWindow \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qmainwindow.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qtwidgetsglobal.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qtguiglobal.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qglobal.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qconfig-bootstrapped.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qconfig.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qtcore-config.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qsystemdetection.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qprocessordetection.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qcompilerdetection.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qtypeinfo.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qsysinfo.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qlogging.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qflags.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qatomic.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qbasicatomic.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qatomic_bootstrap.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qgenericatomic.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qatomic_cxx11.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qatomic_msvc.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qglobalstatic.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qmutex.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qnumeric.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qversiontagging.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qtgui-config.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qtwidgets-config.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qwidget.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qwindowdefs.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qobjectdefs.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qnamespace.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qobjectdefs_impl.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qwindowdefs_win.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qobject.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstring.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qchar.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qbytearray.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qrefcount.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qarraydata.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringliteral.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringalgorithms.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringview.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringbuilder.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qlist.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qalgorithms.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qiterator.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qhashfunctions.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qpair.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qbytearraylist.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringlist.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qregexp.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringmatcher.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qcoreevent.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qscopedpointer.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qmetatype.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qvarlengtharray.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qcontainerfwd.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qobject_impl.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qmargins.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpaintdevice.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qrect.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qsize.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qpoint.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpalette.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qcolor.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qrgb.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qrgba64.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qbrush.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qvector.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qmatrix.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpolygon.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qregion.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qdatastream.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qiodevice.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qline.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qtransform.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpainterpath.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qimage.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpixelformat.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpixmap.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qsharedpointer.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qshareddata.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qhash.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qsharedpointer_impl.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qfont.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qfontmetrics.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qfontinfo.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qsizepolicy.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qcursor.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qkeysequence.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qevent.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qvariant.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qmap.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qdebug.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qtextstream.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qlocale.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qset.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qcontiguouscache.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qurl.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qurlquery.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qfile.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qfiledevice.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qvector2d.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qtouchdevice.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qtabwidget.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qicon.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QListWidget \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qlistwidget.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qlistview.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qabstractitemview.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qabstractscrollarea.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qframe.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qabstractitemmodel.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qitemselectionmodel.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qabstractitemdelegate.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qstyleoption.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qabstractspinbox.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qvalidator.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qregularexpression.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qslider.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qabstractslider.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qstyle.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qtabbar.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qrubberband.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QListWidgetItem \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QScroller \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qscroller.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QObject \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QPointF \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QScrollerProperties \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qscrollerproperties.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QScopedPointer \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QMetaType \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QVariant \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QPushButton \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qpushbutton.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qabstractbutton.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/QImage \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/QIcon \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QSize \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/QPixmap \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QLabel \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qlabel.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/QPainter \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpainter.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qtextoption.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpen.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/QPaintEvent \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QGraphicsView \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicsview.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qscrollarea.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicsscene.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QVBoxLayout \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qboxlayout.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qlayout.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qlayoutitem.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgridlayout.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QHBoxLayout \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/version.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/config.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/system.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/memento.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/track-usage.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/context.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/geometry.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/crypt.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/getopt.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/hash.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/output.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/buffer.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/string-util.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/pool.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/tree.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/bidi.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/xml.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/stream.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/compress.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/compressed-buffer.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/filter.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/store.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/archive.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/colorspace.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/pixmap.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/separation.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/glyph.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/bitmap.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/image.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/shade.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/font.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/path.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/text.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/color-management.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/device.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/display-list.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/structured-text.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/transition.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/glyph-cache.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/link.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/outline.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/document.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/annotation.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/util.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/writer.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/band-writer.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/output-pnm.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/output-png.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/output-pwg.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/output-pcl.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/output-pclm.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/output-ps.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/output-psd.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/output-svg.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/fitz/output-tga.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/name-table.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/object.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/document.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/parse.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/xref.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/crypt.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/page.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/interpret.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/font.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/cmap.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/resource.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/annot.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/field.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/widget.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/appearance.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/event.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/javascript.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/output-pdf.h \
+		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/clean.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QDebug
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o reader.o Reader/reader.cpp
+
+slidepage.o: SlidePage/slidepage.cpp SlidePage/slidepage.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QWidget \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qwidget.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qtwidgetsglobal.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qtguiglobal.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qglobal.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qconfig-bootstrapped.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qconfig.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qtcore-config.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qsystemdetection.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qprocessordetection.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qcompilerdetection.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qtypeinfo.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qsysinfo.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qlogging.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qflags.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qatomic.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qbasicatomic.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qatomic_bootstrap.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qgenericatomic.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qatomic_cxx11.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qatomic_msvc.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qglobalstatic.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qmutex.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qnumeric.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qversiontagging.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qtgui-config.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qtwidgets-config.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qwindowdefs.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qobjectdefs.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qnamespace.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qobjectdefs_impl.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qwindowdefs_win.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qobject.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstring.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qchar.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qbytearray.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qrefcount.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qarraydata.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringliteral.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringalgorithms.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringview.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringbuilder.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qlist.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qalgorithms.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qiterator.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qhashfunctions.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qpair.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qbytearraylist.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringlist.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qregexp.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qstringmatcher.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qcoreevent.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qscopedpointer.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qmetatype.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qvarlengtharray.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qcontainerfwd.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qobject_impl.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qmargins.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpaintdevice.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qrect.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qsize.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qpoint.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpalette.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qcolor.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qrgb.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qrgba64.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qbrush.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qvector.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qmatrix.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpolygon.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qregion.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qdatastream.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qiodevice.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qline.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qtransform.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpainterpath.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qimage.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpixelformat.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpixmap.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qsharedpointer.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qshareddata.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qhash.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qsharedpointer_impl.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qfont.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qfontmetrics.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qfontinfo.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qsizepolicy.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qcursor.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qkeysequence.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qevent.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qvariant.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qmap.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qdebug.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qtextstream.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qlocale.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qset.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qcontiguouscache.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qurl.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qurlquery.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qfile.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qfiledevice.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qvector2d.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qtouchdevice.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QHBoxLayout \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qboxlayout.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qlayout.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qlayoutitem.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgridlayout.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/QMouseEvent \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QScroller \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qscroller.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QObject \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QPointF \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QScrollerProperties \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qscrollerproperties.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QScopedPointer \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QMetaType \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QVariant \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QScrollBar \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qscrollbar.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qabstractslider.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QScrollArea \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qscrollarea.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qabstractscrollarea.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qframe.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QTimer \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qtimer.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qbasictimer.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QVBoxLayout \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QLabel \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qlabel.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QDebug \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QPropertyAnimation \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qpropertyanimation.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qvariantanimation.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qeasingcurve.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qabstractanimation.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o slidepage.o SlidePage/slidepage.cpp
 
 main.o: main.cpp mainwindow.h \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QMainWindow \
@@ -818,19 +1579,15 @@ main.o: main.cpp mainwindow.h \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/QPixmap \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QLabel \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qlabel.h \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QGraphicsScene \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicsscene.h \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpen.h \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QGraphicsProxyWidget \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicsproxywidget.h \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicswidget.h \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicslayoutitem.h \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicsitem.h \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QGraphicsView \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicsview.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/QPainter \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpainter.h \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qtextoption.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpen.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/QPaintEvent \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QGraphicsView \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicsview.h \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qscrollarea.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicsscene.h \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QVBoxLayout \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qboxlayout.h \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qlayout.h \
@@ -913,6 +1670,16 @@ main.o: main.cpp mainwindow.h \
 		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/javascript.h \
 		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/output-pdf.h \
 		../../mylib/mupdf-1.12.0-source/include/mupdf/pdf/clean.h \
+		SlidePage/slidepage.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QWidget \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/QMouseEvent \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QScrollBar \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qscrollbar.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QScrollArea \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/QTimer \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qtimer.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qbasictimer.h \
+		Reader/reader.h \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QApplication \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qapplication.h \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtCore/qcoreapplication.h \
@@ -1067,19 +1834,15 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/QPixmap \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QLabel \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qlabel.h \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QGraphicsScene \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicsscene.h \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpen.h \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QGraphicsProxyWidget \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicsproxywidget.h \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicswidget.h \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicslayoutitem.h \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicsitem.h \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QGraphicsView \
-		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicsview.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/QPainter \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpainter.h \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qtextoption.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/qpen.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtGui/QPaintEvent \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QGraphicsView \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicsview.h \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qscrollarea.h \
+		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qgraphicsscene.h \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/QVBoxLayout \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qboxlayout.h \
 		../../qt-everywhere/qt-everywhere-src-5.12.9/arm-qt/include/QtWidgets/qlayout.h \
@@ -1167,6 +1930,12 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 
 qrc_res.o: qrc_res.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_res.o qrc_res.cpp
+
+moc_reader.o: moc_reader.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_reader.o moc_reader.cpp
+
+moc_slidepage.o: moc_slidepage.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_slidepage.o moc_slidepage.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
