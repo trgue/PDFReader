@@ -17,12 +17,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     Reader/reader.cpp \
+    SelectPage/selectpage.cpp \
     SlidePage/slidepage.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     Reader/reader.h \
+    SelectPage/selectpage.h \
     SlidePage/slidepage.h \
     mainwindow.h
 

@@ -1,9 +1,10 @@
 #include "reader.h"
 #include <QDebug>
 
-Reader::Reader(QWidget *parent) : QMainWindow(parent)
+Reader::Reader(QWidget *parent, char* input) : QMainWindow(parent)
 {
-    char *input = const_cast< char* >("1.pdf");
+//    char *input = const_cast< char* >("1.pdf");
+    this->setGeometry(0, 0, 1024, 600);
     hBoxLayout = new QHBoxLayout();
     hBoxLayout->setContentsMargins(0, 0, 0, 0);
     hBoxLayout->setSpacing(0);
@@ -12,7 +13,7 @@ Reader::Reader(QWidget *parent) : QMainWindow(parent)
     vBoxLayout->setAlignment(Qt::AlignCenter);
     vBoxLayout->setSpacing(0);
 
-    widget = new QWidget();
+    widget = new QWidget(this);
     widget->setMinimumSize(1024, 600);
     widget->setObjectName("widget");
 
@@ -152,7 +153,8 @@ void Reader::pdfWidgetRow_Changed(int currentRow)
 
 void Reader::pushButton0_Clicked()
 {
-
+    emit backToSelectPage();
+    this->close();
 }
 
 void Reader::pushButton1_Clicked()

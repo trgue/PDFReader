@@ -24,7 +24,7 @@ class Reader : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit Reader(QWidget *parent = nullptr);
+    explicit Reader(QWidget *parent = nullptr, char* input = nullptr);
     ~Reader();
 
 private:
@@ -59,6 +59,9 @@ private slots:
     void pushButton0_Clicked();
     void pushButton1_Clicked();
     void pdfWidgetRow_Changed(int currentRow);
+
+signals:
+    void backToSelectPage();
 
 };
 

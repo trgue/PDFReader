@@ -1,9 +1,11 @@
 #include "mainwindow.h"
 #include "SlidePage/slidepage.h"
 #include "Reader/reader.h"
+#include "SelectPage/selectpage.h"
 
 #include <QApplication>
 #include <QFile>
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {
@@ -15,8 +17,6 @@ int main(int argc, char *argv[])
         qApp->setStyleSheet(stylesheet);
         file.close();
     }
-//    MainWindow w;
-    Reader w;
-    w.show();
+    MainWindow w;
     return a.exec();
 }
