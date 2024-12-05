@@ -8,7 +8,7 @@ SelectPage::SelectPage(QWidget *parent)
     : QMainWindow(parent)
 {
 
-    selectWidget = new QListWidget();
+    selectWidget = new QListWidget(this);
     selectWidget->setMinimumSize(1024, 600);
 
     /* 图标显示 */
@@ -41,10 +41,9 @@ SelectPage::SelectPage(QWidget *parent)
 void SelectPage::selectWidgetCliked(QListWidgetItem* item)
 {
 
-    QByteArray ba = ("./myPDF/" + item->text() + ".pdf").toLatin1();
+    QByteArray ba = ("./myPDF/" + item->text() + ".pdf").toUtf8();
     ch = new char;
     ch = ba.data();
-    this->close();          // 未定义关闭销毁
     emit showReader(ch);
 }
 
@@ -61,9 +60,9 @@ void SelectPage::scanPDF()
 
         for (int i = 0; i < files.count(); i++) {
             QString fileName = QString::fromUtf8(files.at(i).fileName().replace(".pdf", "").toUtf8().data());
-            qDebug() << fileName << endl;
+//            qDebug() << fileName << endl;
             QImage image;
-            image.load(":/icon/book");
+            image.load(":/icon/image/book");
             QListWidgetItem *tmpItem = new QListWidgetItem(QIcon(QPixmap::fromImage(image)), fileName);
             tmpItem->setSizeHint(QSize(100, 120));
             selectWidget->addItem(tmpItem);

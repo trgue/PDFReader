@@ -31,13 +31,13 @@ private:
     QWidget *widget;            // 主widget
     QWidget *buttonWidget;      // 翻页widget
     QWidget *textWidget;        // 页数widget
-    QWidget *pdfWidget;         // pdf图片widget
     QVBoxLayout *vBoxLayout;
     QHBoxLayout *hBoxLayout;
-    QLabel *tmpLabel;
+    QLabel *tmpLabel;           // 每一页的图像label
     QPainter *painter;
     QPushButton *pushButton[2];
 
+    /* MuPDF */
     fz_context *ctx;
     fz_document *doc;
     fz_pixmap *pix;
@@ -45,13 +45,13 @@ private:
     float zoom, rotate;
     int page_count;
 
-    SlidePage *slidePage;
+    SlidePage *slidePage;       // 阅读页面
 
 private:
-    void multiPageShowBySlidePage();
-    void buttonSet();
-    void showPaint(int currentRow);
-    void widgetSet();
+    void multiPageShowBySlidePage();    // 阅读页面创建
+    void buttonSet();                   // 按钮创建
+    void showPaint(int currentRow);     // 画页数label
+    void widgetSet();                   // 布局
     void paintEvent(QPaintEvent* event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
 

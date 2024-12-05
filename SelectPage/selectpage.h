@@ -14,7 +14,6 @@ class SelectPage : public QMainWindow
 {
     Q_OBJECT
 public:
-    bool clickedFlag;
     char *ch;
 public:
     explicit SelectPage(QWidget *parent = nullptr);
@@ -24,7 +23,6 @@ private:
 
     QListWidget *selectWidget;
     QWidget *mainWidget;
-    QWidget *newWidget;
     QHBoxLayout *hBoxLayout;
 
 

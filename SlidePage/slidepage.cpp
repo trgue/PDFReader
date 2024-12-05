@@ -2,8 +2,10 @@
 #include <QDebug>
 #include <QPropertyAnimation>
 
-SlidePage::SlidePage(QWidget *parent):
-    QWidget(parent)
+SlidePage::SlidePage(QWidget *parent)
+    : QWidget(parent)
+    , pageIndex(0)
+    , pageCount(0)
 {
     this->setMinimumSize(900, 600);
 //    this->setMaximumSize(900, 600);
@@ -11,7 +13,7 @@ SlidePage::SlidePage(QWidget *parent):
     scrollArea = new QScrollArea(this);
     scrollArea->setAlignment(Qt::AlignCenter);
 
-    mainWidget = new QWidget();
+    mainWidget = new QWidget(this);
     mainWidget->setWindowFlags(Qt::FramelessWindowHint);
 
     scrollArea->setWidget(mainWidget);
@@ -151,7 +153,7 @@ void SlidePage::onStateChanged(QScroller::State state)
         animation->setStartValue(scrollArea->verticalScrollBar()->value());
         animation->setEasingCurve(QEasingCurve::OutCurve);
         animation->setEndValue(pageIndex * this->height());
-        animation->start();
+        animation->start(QAbstractAnimation::DeleteWhenStopped);
 
         if (currentPageIndex != pageIndex) {
             /* 发送当前页面的位置信号 */

@@ -17,17 +17,12 @@ Reader::Reader(QWidget *parent, char* input) : QMainWindow(parent)
     widget->setMinimumSize(1024, 600);
     widget->setObjectName("widget");
 
-    pdfWidget = new QWidget();
-    pdfWidget->setMinimumSize(900, 600);
-    pdfWidget->setWindowFlags(Qt::FramelessWindowHint);
-    pdfWidget->setStyleSheet("background: transparent");
-
-    textWidget = new QWidget();
+    textWidget = new QWidget(this);
     textWidget->setMinimumSize(100, 200);
     textWidget->setMaximumSize(100, 200);
     textWidget->installEventFilter(this);
 
-    buttonWidget = new QWidget();
+    buttonWidget = new QWidget(this);
 
     //100%缩放比
     zoom = 100;
@@ -77,6 +72,7 @@ Reader::Reader(QWidget *parent, char* input) : QMainWindow(parent)
     connect(pushButton[0], SIGNAL(clicked()), this, SLOT(pushButton0_Clicked()));
     connect(pushButton[1], SIGNAL(clicked()), this, SLOT(pushButton1_Clicked()));
 
+    slidePage = new SlidePage(this);
     multiPageShowBySlidePage();
 
     connect(slidePage, SIGNAL(currentPageIndexChanged(int)), this, SLOT(pdfWidgetRow_Changed(int)));
@@ -103,7 +99,7 @@ void Reader::widgetSet()
     vBoxLayout->addWidget(pushButton[1]);
     buttonWidget->setLayout(vBoxLayout);
     hBoxLayout->addWidget(buttonWidget);
-    hBoxLayout->addWidget(pdfWidget);
+    hBoxLayout->addWidget(slidePage);
     widget->setLayout(hBoxLayout);
     setCentralWidget(widget);
 }
@@ -154,7 +150,7 @@ void Reader::pdfWidgetRow_Changed(int currentRow)
 void Reader::pushButton0_Clicked()
 {
     emit backToSelectPage();
-    this->close();
+//    this->close();
 }
 
 void Reader::pushButton1_Clicked()
@@ -165,7 +161,7 @@ void Reader::pushButton1_Clicked()
 void Reader::buttonSet()
 {
     for (int i = 0; i < 2; i++) {
-        pushButton[i] = new QPushButton();
+        pushButton[i] = new QPushButton(this);
         pushButton[i]->setMinimumSize(100, 100);
         if (i == 0) {
             pushButton[i]->setObjectName("btn_up");
@@ -179,7 +175,6 @@ void Reader::buttonSet()
 
 void Reader::multiPageShowBySlidePage()
 {
-    slidePage = new SlidePage(pdfWidget);
     for (int i = 0; i < page_count; i++) {
         //渲染pixmap
         pix = fz_new_pixmap_from_page_number(ctx, doc, i, &ctm, fz_device_rgb(ctx), 0);
@@ -190,7 +185,7 @@ void Reader::multiPageShowBySlidePage()
         QImage image(samples, width, height,pix->stride,QImage::Format_RGB888);
         image = image.scaled(900, 600);
 
-        tmpLabel = new QLabel();
+        tmpLabel = new QLabel(this);
         tmpLabel->setMinimumSize(900, 600);
         tmpLabel->setPixmap(QPixmap::fromImage(image));
         slidePage->addPage(tmpLabel);
