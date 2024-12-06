@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    BlueToothTransfer/bluetoothtransfer.cpp \
     Reader/reader.cpp \
     SelectPage/selectpage.cpp \
     SlidePage/slidepage.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
+    BlueToothTransfer/bluetoothtransfer.h \
     Reader/reader.h \
     SelectPage/selectpage.h \
     SlidePage/slidepage.h \

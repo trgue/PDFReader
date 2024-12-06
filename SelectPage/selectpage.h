@@ -6,7 +6,9 @@
 #include <QWidget>
 #include <QListWidget>
 #include <QHBoxLayout>
+#include <QPushButton>
 #include <QDir>
+#include <BlueToothTransfer/bluetoothtransfer.h>
 
 //char* ch;
 
@@ -23,7 +25,11 @@ private:
 
     QListWidget *selectWidget;
     QWidget *mainWidget;
+    QWidget *buttonWidget;
     QHBoxLayout *hBoxLayout;
+    QPushButton *transferButton;
+    bluetoothtransfer *w;
+
 
 
 private:
@@ -31,6 +37,8 @@ private:
 
 private slots:
     void selectWidgetCliked(QListWidgetItem*);
+    void buttonClicked();
+    void bleQuit();
 
 signals:
     void showReader(char*);

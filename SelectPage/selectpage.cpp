@@ -21,10 +21,13 @@ SelectPage::SelectPage(QWidget *parent)
     selectWidget->setIconSize(QSize(100, 100));
     selectWidget->clear();
 
+    transferButton = new QPushButton(this);
+
     mainWidget = new QWidget(this);
     mainWidget->setGeometry(0, 0, 1024, 600);
     hBoxLayout = new QHBoxLayout();
     hBoxLayout->addWidget(selectWidget);
+    hBoxLayout->addWidget(transferButton);
     mainWidget->setLayout(hBoxLayout);
     setCentralWidget(mainWidget);
 
@@ -33,9 +36,25 @@ SelectPage::SelectPage(QWidget *parent)
     scanPDF();
 
     connect(selectWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(selectWidgetCliked(QListWidgetItem*)));
+    connect(transferButton, SIGNAL(clicked()), this, SLOT(buttonClicked()));
 
 
+}
 
+void SelectPage::bleQuit()
+{
+    w->close();
+}
+
+void SelectPage::buttonClicked()
+{
+    w = new bluetoothtransfer(this);
+    connect(w, SIGNAL(quit()), this, SLOT(bleQuit()));
+    qDebug() << "button clicked " << endl;
+    w->setWindowFlag(Qt::WindowStaysOnTopHint);
+    w->setAttribute(Qt::WA_DeleteOnClose);
+    w->setGeometry(312, 200, 400, 200);
+    w->showMinimized();
 }
 
 void SelectPage::selectWidgetCliked(QListWidgetItem* item)
