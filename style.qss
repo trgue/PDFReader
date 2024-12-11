@@ -23,3 +23,13 @@ border-image:url(:/icon/image/down_clicked.png);
 outline:none;
 }
 
+QPushButton#transferButton {
+border-image:url(:/icon/image/add.png);
+outline:none;
+}
+
+QPushButton#transferButton:pressed {
+border-image:url(:/icon/image/add_clicked.png);
+outline:none;
+}
+

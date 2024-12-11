@@ -5,6 +5,8 @@
         <file>image/down_clicked.png</file>
         <file>image/down.png</file>
         <file>image/book.png</file>
+        <file>image/add_clicked.png</file>
+        <file>image/add.png</file>
     </qresource>
     <qresource prefix="/">
         <file>style.qss</file>

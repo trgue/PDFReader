@@ -24,9 +24,9 @@ Reader::Reader(QWidget *parent, char* input) : QMainWindow(parent)
 
     buttonWidget = new QWidget(this);
 
-    //100%缩放比
+    /* 缩放比 */
     zoom = 100;
-    //旋转为0
+    /* 旋转 */
     rotate = 90;
 
     /* 创建上下文 */
@@ -35,7 +35,7 @@ Reader::Reader(QWidget *parent, char* input) : QMainWindow(parent)
         qDebug()<<stderr<<"cannot create mupdf context";
         return;
     }
-    //注册文档控制
+    /* 注册文档控制 */
     fz_try(ctx)
             fz_register_document_handlers(ctx);
     fz_catch(ctx) {
@@ -43,7 +43,7 @@ Reader::Reader(QWidget *parent, char* input) : QMainWindow(parent)
         fz_drop_context(ctx);
         return;
     }
-    //打开文档
+    /* 打开文档 */
     fz_try(ctx)
         doc = fz_open_document(ctx, input);
     fz_catch(ctx)
@@ -63,15 +63,17 @@ Reader::Reader(QWidget *parent, char* input) : QMainWindow(parent)
         return;
     }
 
-    //计算缩放以及旋转
+    /* 计算缩放以及旋转 */
     fz_scale(&ctm, zoom / 100, zoom / 100);
     fz_pre_rotate(&ctm, rotate);
 
+    /* 设置按钮 */
     buttonSet();
 
     connect(pushButton[0], SIGNAL(clicked()), this, SLOT(pushButton0_Clicked()));
     connect(pushButton[1], SIGNAL(clicked()), this, SLOT(pushButton1_Clicked()));
 
+    /* 设置滑动页面 */
     slidePage = new SlidePage(this);
     multiPageShowBySlidePage();
 
@@ -147,12 +149,14 @@ void Reader::pdfWidgetRow_Changed(int currentRow)
     }
 }
 
+/* exit */
 void Reader::pushButton0_Clicked()
 {
     emit backToSelectPage();
 //    this->close();
 }
 
+/* unused */
 void Reader::pushButton1_Clicked()
 {
 

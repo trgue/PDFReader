@@ -8,9 +8,7 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QDir>
-#include <BlueToothTransfer/bluetoothtransfer.h>
 
-//char* ch;
 
 class SelectPage : public QMainWindow
 {
@@ -28,7 +26,6 @@ private:
     QWidget *buttonWidget;
     QHBoxLayout *hBoxLayout;
     QPushButton *transferButton;
-    bluetoothtransfer *w;
 
 
 
@@ -37,8 +34,6 @@ private:
 
 private slots:
     void selectWidgetCliked(QListWidgetItem*);
-    void buttonClicked();
-    void bleQuit();
 
 signals:
     void showReader(char*);
